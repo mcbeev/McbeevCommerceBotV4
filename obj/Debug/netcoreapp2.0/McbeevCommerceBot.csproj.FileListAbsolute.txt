@@ -1,0 +1,11 @@
+F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\bin\Debug\netcoreapp2.0\McbeevCommerceBot.deps.json
+F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\bin\Debug\netcoreapp2.0\McbeevCommerceBot.runtimeconfig.json
+F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\bin\Debug\netcoreapp2.0\McbeevCommerceBot.runtimeconfig.dev.json
+F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\bin\Debug\netcoreapp2.0\McbeevCommerceBot.dll
+F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\bin\Debug\netcoreapp2.0\McbeevCommerceBot.pdb
+F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\obj\Debug\netcoreapp2.0\McbeevCommerceBot.csprojAssemblyReference.cache
+F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\obj\Debug\netcoreapp2.0\McbeevCommerceBot.csproj.CoreCompileInputs.cache
+F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\obj\Debug\netcoreapp2.0\McbeevCommerceBot.AssemblyInfoInputs.cache
+F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\obj\Debug\netcoreapp2.0\McbeevCommerceBot.AssemblyInfo.cs
+F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\obj\Debug\netcoreapp2.0\McbeevCommerceBot.dll
+F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\obj\Debug\netcoreapp2.0\McbeevCommerceBot.pdb
