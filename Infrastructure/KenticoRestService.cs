@@ -277,7 +277,7 @@ namespace McbeevCommerceBot.Infrastructure
 
             var d = await GetObjectFromRestService<SKUResponse>(
                "/ecommerce.sku/",
-               string.Format("TopN={0}&Where=SKUPublicStatusID=2&orderby=skulastmodified%20desc", TopN));
+               string.Format("TopN={0}&Where=SKUPublicStatusID=2&orderby=skulastmodified%20desc&columns=SKUID,SKUName,SKUPrice", TopN));
 
             if (d.ecommerce_skus[0] != null)
             {

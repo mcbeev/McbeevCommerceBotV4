@@ -32,8 +32,8 @@ namespace McbeevCommerceBot
             dialogs = new DialogSet();
             dialogs.Add("None", new WaterfallStep[] { DefaultDialog });
             dialogs.Add("OrderHistory", new OrderHistoryDialog(_settings.Value));
-            dialogs.Add("OrderTrackingNumber", new OrderHistoryDialog(_settings.Value));
-            dialogs.Add("PlaceOrder", new OrderHistoryDialog(_settings.Value));
+            dialogs.Add("OrderTrackingNumber", new OrderTrackingDialog(_settings.Value));
+            dialogs.Add("PlaceOrder", new PlaceOrderDialog(_settings.Value));
             
         }
 
@@ -46,6 +46,7 @@ namespace McbeevCommerceBot
             if (context.Activity.Type == ActivityTypes.ConversationUpdate && context.Activity.MembersAdded.FirstOrDefault()?.Id == context.Activity.Recipient.Id)
             {
                 await context.SendActivity("Hi! Welcome to the Mcbeev Commerce Bot.");
+                await context.SendActivity("How can we help you today?\n\nWould you like to **Place a new Order**, **Check your Order History** or **Find an Order Tracking Number**? Or is there something else we can help with?");
             }
             else if (context.Activity.Type == ActivityTypes.Message)
             {
