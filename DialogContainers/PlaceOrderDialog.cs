@@ -25,6 +25,7 @@ namespace McbeevCommerceBot.DialogContainers
             Dialogs.Add(_dialogId, new WaterfallStep[]
             {
                 ChooseProductsToBuy,
+                AskHowManyToBuy,
                 PassProductToShoppingCartOnWebsite
             });
 
@@ -33,9 +34,10 @@ namespace McbeevCommerceBot.DialogContainers
             //dynamicPrompt.ChoiceOptions.IncludeNumbers = false;
 
             Dialogs.Add("productsPrompt", dynamicPrompt);
+            Dialogs.Add("textPrompt", new Microsoft.Bot.Builder.Dialogs.TextPrompt());
+            Dialogs.Add("numberPrompt", new Microsoft.Bot.Builder.Dialogs.NumberPrompt<int>(Culture.English));
         }
 
-        // This is the first step of the Order History dialog
         private async Task ChooseProductsToBuy(DialogContext dc, IDictionary<string, object> args, SkipStepFunction next)
         {
             var cardPrompt = new Microsoft.Bot.Builder.Dialogs.ChoicePrompt(Culture.English)
@@ -47,13 +49,24 @@ namespace McbeevCommerceBot.DialogContainers
             await dc.Prompt("productsPrompt", "Which of our popular items would you like to add to your order:", cardOptions).ConfigureAwait(false);           
         }
 
-        private async Task PassProductToShoppingCartOnWebsite(DialogContext dc, IDictionary<string, object> args, SkipStepFunction next)
+        private async Task AskHowManyToBuy(DialogContext dc, IDictionary<string, object> args, SkipStepFunction next)
         {
             var chosenChoice = (FoundChoice)args["Value"];
+            dc.ActiveDialog.State.Add("chosenChoice", chosenChoice.Index);
 
+            await dc.Prompt("numberPrompt", "How many would you like to purchase?", new PromptOptions()
+            {
+                RetryPromptString = "Sorry, please specify the quantity in a number format."
+            }).ConfigureAwait(false);
+        }
+
+        private async Task PassProductToShoppingCartOnWebsite(DialogContext dc, IDictionary<string, object> args, SkipStepFunction next)
+        {
             List<SKU> skus = (List<SKU>)dc.ActiveDialog.State["skus"];
 
-            var chosenSku = skus[chosenChoice.Index];
+            var chosenSku = skus[(int)dc.ActiveDialog.State["chosenChoice"]];
+
+            var qtyrResult = (NumberResult<int>)args;
 
             await dc.Context.SendActivity($"Thank you, but we are not ready to receive payment right now. Please continue to our e-commerce store to finalize your purchase.");
 
@@ -66,7 +79,7 @@ namespace McbeevCommerceBot.DialogContainers
                         new CardAction(
                             title: "Continue Purchase", 
                             type: ActionTypes.OpenUrl,
-                            value: $"http://dg11.bizstreamcms.com/Store/Checkout/Shopping-cart?skuid={chosenSku.SKUID}&qty=1"
+                            value: $"http://dg11.bizstreamcms.com/Store/Checkout/Shopping-cart?skuid={chosenSku.SKUID}&qty={qtyrResult.Value}"
                         )
                     })
                 .ToAttachment());
