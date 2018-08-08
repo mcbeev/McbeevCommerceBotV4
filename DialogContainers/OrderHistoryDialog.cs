@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using McbeevCommerceBot.Infrastructure;
 using McbeevCommerceBot.Models;
@@ -9,14 +10,19 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Prompts;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
+using PromptsDialog = Microsoft.Bot.Builder.Dialogs;
 
 
 namespace McbeevCommerceBot.DialogContainers
 {
     public class OrderHistoryDialog : DialogContainer
     {
-        public const string _dialogId = "findOrderHistory";
+        private const string _dialogId = "findOrderHistory";
 
+        // email regex is from: https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address
+        private const string EmailRegExPattern = @"^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+        private const string ZipRegExPattern = @"^([0-9]{5})(?:[-\s]*([0-9]{4}))?$";
+        
         private KenticoRestService _kenticoRestService;
 
         public OrderHistoryDialog(KenticoRestServiceSettings kenticoRestServiceSettings) : base(_dialogId)
@@ -30,6 +36,9 @@ namespace McbeevCommerceBot.DialogContainers
                 ReturnOrderHistory
             });
             Dialogs.Add("textPrompt", new Microsoft.Bot.Builder.Dialogs.TextPrompt());
+            Dialogs.Add("emailPrompt", new PromptsDialog.TextPrompt(EmailValidator));
+            Dialogs.Add("zipCodePrompt", new PromptsDialog.TextPrompt(ZipCodeValidator));
+
         }
 
         // This is the first step of the Order History dialog
@@ -56,7 +65,7 @@ namespace McbeevCommerceBot.DialogContainers
             if (!dialogState.ContainsKey("EmailAddress"))
             {
                 await dc.Context.SendActivity("Great, I just need a few pieces of information from you.");
-                await dc.Prompt("textPrompt", "Can I get your email address for the order?");
+                await dc.Prompt("emailPrompt", "Can I get your email address for the order?");
             }
             else
             {
@@ -76,7 +85,7 @@ namespace McbeevCommerceBot.DialogContainers
                 dc.ActiveDialog.State["EmailAddress"] = emailResult.Text;
             }
 
-            await dc.Prompt("textPrompt", "Please enter your billing ZipCode");
+            await dc.Prompt("zipCodePrompt", "Please enter your billing ZipCode");
         }
 
         private async Task ReturnOrderHistory(DialogContext dc, IDictionary<string, object> args, SkipStepFunction next)
@@ -125,6 +134,25 @@ namespace McbeevCommerceBot.DialogContainers
             await dc.Context.SendActivity(message);
 
             await dc.End(dc.ActiveDialog.State);
+        }
+
+        //Validators
+        private async Task EmailValidator(ITurnContext context, TextResult result)
+        {
+            if (!Regex.IsMatch(result.Value, EmailRegExPattern))
+            {
+                result.Status = PromptStatus.NotRecognized;
+                await context.SendActivity("Please enter a valid email address.");
+            }
+        }
+
+        private async Task ZipCodeValidator(ITurnContext context, TextResult result)
+        {
+            if (!Regex.IsMatch(result.Value, ZipRegExPattern))
+            {
+                result.Status = PromptStatus.NotRecognized;
+                await context.SendActivity("Please enter a valid US ZipCode.");
+            }
         }
 
         private T GetEntity<T>(RecognizerResult luisResult, string entityKey)
