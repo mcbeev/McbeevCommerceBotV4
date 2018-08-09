@@ -7,6 +7,8 @@
     "defines": [
       "TRACE",
       "DEBUG",
+      "NETCOREAPP2_1",
+      "DEBUG",
       "NETCOREAPP",
       "NETCOREAPP2_1"
     ],
@@ -22,7 +24,7 @@
   },
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "McbeevCommerceBot/1.0.0": {
+      "McbeevCommerceBot/1.0.4": {
         "dependencies": {
           "Microsoft.AspNetCore.All": "2.1.2",
           "Microsoft.Bot.Builder.Ai.LUIS": "4.0.1-preview",
@@ -3972,7 +3974,7 @@
     }
   },
   "libraries": {
-    "McbeevCommerceBot/1.0.0": {
+    "McbeevCommerceBot/1.0.4": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

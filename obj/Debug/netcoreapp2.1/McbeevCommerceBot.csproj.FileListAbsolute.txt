@@ -11,4 +11,3 @@ F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\obj\Debug\netcoreapp2.1\
 F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\obj\Debug\netcoreapp2.1\McbeevCommerceBot.RazorTargetAssemblyInfo.cache
 F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\obj\Debug\netcoreapp2.1\McbeevCommerceBot.dll
 F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\obj\Debug\netcoreapp2.1\McbeevCommerceBot.pdb
-F:\ClientProjects\McbeevCommerceBotV4\McbeevCommerceBot\obj\Debug\netcoreapp2.1\McbeevCommerceBot.csprojAssemblyReference.cache

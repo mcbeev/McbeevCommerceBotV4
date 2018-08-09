@@ -13955,7 +13955,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.4",
     "restore": {
       "projectUniqueName": "F:\\ClientProjects\\McbeevCommerceBotV4\\McbeevCommerceBot\\McbeevCommerceBot.csproj",
       "projectName": "McbeevCommerceBot",
